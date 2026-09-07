@@ -13,7 +13,7 @@ type TiledImage = OpenSeadragon.TiledImage
 
 const FOCUS_CLOUD_COUNT = 24
 const VIEWPORT_AVOID_ZOOM = 2
-/** Cursor evade radius as fraction of map min-dimension. */
+/** Cursor evade radius as fraction of the *visible* viewport min-dimension. */
 const CURSOR_AVOID_FRAC = 0.16
 /** Peak vertical flee speed relative to cruise speed (at cursor center). */
 const CURSOR_NUDGE = 1.15
@@ -148,12 +148,16 @@ export function startFocusClouds(
     const homeZoom = viewer.viewport.getHomeZoom()
     const zoom = viewer.viewport.getZoom(true)
     const deepZoom = !lockedHome && zoom >= homeZoom * VIEWPORT_AVOID_ZOOM
-    const cursorR = Math.min(size.x, size.y) * CURSOR_AVOID_FRAC
     const speedScale = preferReducedMotion ? 0.2 : 1
 
     const bounds = viewer.viewport.getBounds(true)
     const vtl = item.viewportToImageCoordinates(bounds.getTopLeft())
     const vbr = item.viewportToImageCoordinates(bounds.getBottomRight())
+    // Evade radius in image px must track the *visible* viewport, not the
+    // full map — otherwise the on-screen avoid zone balloons when zoomed in.
+    const viewW = Math.abs(vbr.x - vtl.x)
+    const viewH = Math.abs(vbr.y - vtl.y)
+    const cursorR = Math.min(viewW, viewH) * CURSOR_AVOID_FRAC
 
     for (const cloud of clouds) {
       let spd = cloud.speed * speedScale
@@ -169,7 +173,7 @@ export function startFocusClouds(
       let vx = cloud.dir * spd
       let vyTarget = 0
 
-      if (cursorImg && !deepZoom) {
+      if (cursorImg) {
         const dx = cloud.x - cursorImg.x
         const dy = cloud.y - cursorImg.y
         const dCursor = Math.hypot(dx, dy)
@@ -200,20 +204,28 @@ export function startFocusClouds(
     raf = requestAnimationFrame(tick)
   }
 
-  const onPointerMove = (e: PointerEvent) => {
-    if (!running) return
+  /**
+   * Pointer → image coords via the OSD container (what pointFromPixel expects).
+   * Divide by CSS scale (ATLab fit) so layout px match _containerInnerSize at any zoom.
+   */
+  const pointerToImage = (e: PointerEvent): { x: number; y: number } | null => {
     const item = viewer.world.getItemAt(0)
-    if (!item) return
-    const rect = canvas.getBoundingClientRect()
-    const sx = rect.width / Math.max(1, canvas.clientWidth)
-    const sy = rect.height / Math.max(1, canvas.clientHeight)
+    if (!item) return null
+    const el = viewer.container as HTMLElement
+    const rect = el.getBoundingClientRect()
+    const sx = rect.width / Math.max(1, el.clientWidth)
+    const sy = rect.height / Math.max(1, el.clientHeight)
     const pixel = new OpenSeadragon.Point(
       (e.clientX - rect.left) / sx,
       (e.clientY - rect.top) / sy,
     )
-    const vp = viewer.viewport.pointFromPixel(pixel, true)
-    const img = item.viewportToImageCoordinates(vp)
-    cursorImg = { x: img.x, y: img.y }
+    const img = item.viewerElementToImageCoordinates(pixel)
+    return { x: img.x, y: img.y }
+  }
+
+  const onPointerMove = (e: PointerEvent) => {
+    if (!running) return
+    cursorImg = pointerToImage(e)
   }
 
   const onPointerLeave = () => {

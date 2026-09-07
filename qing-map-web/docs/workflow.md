@@ -24,7 +24,16 @@ OpenSeadragon loads `/tiles/map.dzi`. Confirm smooth pan and deep zoom before ad
 
 ## 4. Overlays
 
-Implement under `src/overlays/`. Store geometry/metadata as JSON in `data/annotations/` using types from `src/lib/types.ts`.
+Implement under `src/overlays/`. Store geometry/metadata as JSON in `data/overlays/` (and point annotations in `data/annotations/`) using types from `src/lib/types.ts`.
+
+Handi outline (漢地十八省) and Zhongguo outline (中國 — yellow outer + coastal red):
+
+```bash
+npm run extract-overlays
+npm run extract-zhongguo
+```
+
+Toggles via bottom-left seals (`#overlay-seal-handi`, `#overlay-seal-zhongguo`). Wall + ATLab floor share visibility through `overlayStore`.
 
 ## 5. Info pop-ups
 

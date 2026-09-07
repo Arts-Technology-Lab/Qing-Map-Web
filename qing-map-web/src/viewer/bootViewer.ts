@@ -1,5 +1,7 @@
 import OpenSeadragon from 'openseadragon'
 import { getPlaylist } from '../lib/playlist'
+import { mountOverlaysOnViewer } from '../overlays/manager'
+import { mountOverlaySealControls } from '../overlays/sealControl'
 import { mountChrome } from './chrome'
 import { focusIntroRegion, mountIntro } from './intro'
 import { mountFocusMode } from './focusMode'
@@ -102,6 +104,8 @@ export function bootInteractiveViewer(opts: BootInteractiveOptions = {}): OpenSe
 
   mountChrome(viewer)
   mountFocusMode(viewer)
+  mountOverlaysOnViewer(viewer)
+  mountOverlaySealControls()
 
   function lockMinZoomToHome(): void {
     const homeZoom = viewer.viewport.getHomeZoom()

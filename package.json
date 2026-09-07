@@ -1,0 +1,8 @@
+{
+  "name": "qing-map-web-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --prefix qing-map-web",
+    "dev": "npm run dev --prefix qing-map-web"
+  }
+}

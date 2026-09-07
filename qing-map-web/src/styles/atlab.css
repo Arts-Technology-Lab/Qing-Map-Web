@@ -45,6 +45,19 @@
   height: min(29cqh, 210px);
 }
 
+.atlab-wall .overlay-seals {
+  --lingpai-h: min(32cqh, 200px);
+  --lingpai-w: calc(var(--lingpai-h) * 0.38);
+  left: 1.25rem;
+  bottom: 1.25rem;
+  gap: 0.25rem;
+}
+
+.atlab-wall .overlay-seal {
+  width: var(--lingpai-w);
+  height: var(--lingpai-h);
+}
+
 .atlab-floor {
   position: relative;
   width: 100%;

@@ -51,11 +51,18 @@ npm run dev
 
 ## Deploy on Vercel
 
-1. Push this repo to GitHub (include `qing-map-web/assets/preview/` and `qing-map-web/assets/tiles/`).
-2. Import the repo in Vercel → set **Root Directory** to `qing-map-web`.
-3. Framework preset: Vite (or leave defaults — `vercel.json` sets build/output).
-4. Deploy. URLs:
-   - `/` — interactive wall viewer
-   - `/atlab` — wall + floor dual canvas
+Repo root is a thin wrapper; the app is in `qing-map-web/`.
 
-Do **not** commit `assets/source/` (super-res). Preview + tiles are enough for production.
+**Use Root Directory = `./` (repo root), not the `qing-map-web` subfolder** — Vercel’s UI breaks if you set both Vite and a nested root.
+
+1. Commit/push root `vercel.json` + root `package.json` (just added).
+2. Import `Arts-Technology-Lab/Qing-Map-Web`.
+3. Root Directory: **Qing-Map-Web (root)** / `./`.
+4. Framework: **Vite**.
+5. Overrides off, **or**:
+   - Build: `npm run build`
+   - Output: `qing-map-web/dist`
+   - Install: `npm install --prefix qing-map-web`
+6. Deploy, then **Settings → Git → Enable Git LFS**.
+
+URLs: `/` and `/atlab`.

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm install --prefix qing-map-web",
+  "buildCommand": "npm run build --prefix qing-map-web",
+  "outputDirectory": "qing-map-web/dist",
+  "rewrites": [
+    { "source": "/atlab", "destination": "/atlab.html" },
+    { "source": "/atlab/", "destination": "/atlab.html" }
+  ],
+  "headers": [
+    {
+      "source": "/tiles/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/map-preview.jpg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ]
+}

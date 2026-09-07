@@ -1,4 +1,5 @@
 import OpenSeadragon from 'openseadragon'
+import { mountOverlaysOnViewer } from '../overlays/manager'
 import { startFocusClouds, type FocusCloudsHandle } from '../viewer/focusMode'
 
 const PREVIEW_URL = '/map-preview.jpg'
@@ -8,7 +9,7 @@ const FLOOR_CLOUD_COUNT = 32
 
 /**
  * Floor map: full-bleed fitted map, no chrome / interaction.
- * Permanently runs focus-mode mist. Overlays go in #floor-overlays.
+ * Permanently runs focus-mode mist. Vector overlays attach via OSD (same store as wall).
  */
 export function bootFloorViewer(): OpenSeadragon.Viewer {
   const el = document.querySelector<HTMLElement>('#floor-viewer')
@@ -69,6 +70,8 @@ export function bootFloorViewer(): OpenSeadragon.Viewer {
       lockedHome: true,
     })
   }
+
+  mountOverlaysOnViewer(viewer)
 
   viewer.addHandler('open', () => {
     fitHome()

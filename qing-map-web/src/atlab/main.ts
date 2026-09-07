@@ -1,5 +1,6 @@
 import '../styles/viewer.css'
 import '../styles/atlab.css'
+import '../styles/overlays.css'
 import { ATLAB } from '../config'
 import { bootInteractiveViewer } from '../viewer/bootViewer'
 import { bootFloorViewer } from './bootFloor'
