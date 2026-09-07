@@ -1,0 +1,16 @@
+# Qing Map Web — local / OS noise (project-specific ignores live in qing-map-web/.gitignore)
+.DS_Store
+**/.DS_Store
+
+# Dependency / build artifacts if run from repo root
+qing-map-web/node_modules/
+qing-map-web/dist/
+
+# Super-res source only (do not commit ~234MB)
+qing-map-web/assets/source/*
+!qing-map-web/assets/source/.gitkeep
+
+# Generated public map copies (from prepare-public)
+qing-map-web/public/tiles/
+qing-map-web/public/map-preview.jpg
+qing-map-web/public/map-preview-low.jpg

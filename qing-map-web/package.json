@@ -1,0 +1,22 @@
+{
+  "name": "qing-map-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run prepare-public && vite",
+    "build": "npm run prepare-public && tsc && vite build",
+    "preview": "vite preview",
+    "prepare-public": "node scripts/prepare-public.mjs",
+    "copy-source": "node scripts/copy-source.mjs",
+    "copy-previews": "node scripts/copy-previews.mjs"
+  },
+  "devDependencies": {
+    "@types/openseadragon": "^5.0.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "openseadragon": "^6.1.0"
+  }
+}

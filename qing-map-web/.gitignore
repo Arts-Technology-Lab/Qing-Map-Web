@@ -1,0 +1,36 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Super-res working copy only (too large for git / Vercel)
+assets/source/*
+!assets/source/.gitkeep
+
+# Commit preview JPGs + DZI tiles so Vercel can build a working map.
+# (assets/tiles ~73MB, assets/preview ~12MB — under GitHub file limits.)
+
+# Generated public copies (created by npm run prepare-public)
+public/tiles/
+public/map-preview.jpg
+public/map-preview-low.jpg
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

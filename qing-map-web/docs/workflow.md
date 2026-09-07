@@ -1,0 +1,39 @@
+# Workflow
+
+Proceed in this order. Each stage builds on the previous; leave later folders empty until you reach them.
+
+## 1. Copy source
+
+```bash
+npm run copy-source
+```
+
+Reads the super-resolution JPG from `../20260730_object_painting/High Res/` and writes `assets/source/map-super-res.jpg`. Originals are never modified.
+
+## 2. Generate tiles
+
+See [scripts/generate-tiles.md](../scripts/generate-tiles.md). Produces `assets/tiles/map.dzi` + `map_files/`.
+
+## 3. Pan / zoom viewer
+
+```bash
+npm run dev
+```
+
+OpenSeadragon loads `/tiles/map.dzi`. Confirm smooth pan and deep zoom before adding UI.
+
+## 4. Overlays
+
+Implement under `src/overlays/`. Store geometry/metadata as JSON in `data/annotations/` using types from `src/lib/types.ts`.
+
+## 5. Info pop-ups
+
+Implement under `src/popups/`. Bind clicks/hotspots to annotation records (title, body, tags).
+
+## 6. Transition animations
+
+Implement under `src/transitions/` and optional JSON under `data/transitions/` (camera paths, fades, sequenced reveals).
+
+## 7. TouchDesigner sync
+
+See [touchdesigner.md](./touchdesigner.md). Start with the same static build + shared JSON; add WebSocket/OSC only when live sync is required.

@@ -1,0 +1,92 @@
+/* ATLab dual-canvas: Wall 3536×808 over Floor 3536×2400 */
+
+.atlab-body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0b1218;
+}
+
+.atlab {
+  --atlab-w: 3536px;
+  --atlab-wall-h: 808px;
+  --atlab-floor-h: 2400px;
+  position: relative;
+  width: var(--atlab-w);
+  height: calc(var(--atlab-wall-h) + var(--atlab-floor-h));
+  transform-origin: top left;
+  background: #0b1218;
+}
+
+.atlab-wall {
+  position: relative;
+  width: 100%;
+  height: var(--atlab-wall-h);
+  overflow: hidden;
+  z-index: 2;
+  container-type: size;
+}
+
+/* Wall hosts the standard #app chrome at wall dimensions */
+.atlab-wall #app {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ultra-wide wall: larger clouds relative to wall, seal ~half wall height */
+.atlab-wall .intro-veil-cloud {
+  width: min(20cqw, 70cqh);
+  max-width: none;
+}
+
+.atlab-wall .intro-seal {
+  width: min(29cqh, 210px);
+  height: min(29cqh, 210px);
+}
+
+.atlab-floor {
+  position: relative;
+  width: 100%;
+  height: var(--atlab-floor-h);
+  overflow: hidden;
+  z-index: 1;
+  background: #c5d6e4;
+}
+
+.floor-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+}
+
+.floor-preview[hidden] {
+  display: none !important;
+}
+
+.floor-viewer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.floor-viewer .openseadragon-container,
+.floor-viewer .openseadragon-canvas {
+  background: transparent !important;
+}
+
+/* Reserved for future highlight overlays (above the map, below nothing) */
+.floor-overlays {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
