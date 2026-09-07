@@ -1,4 +1,5 @@
 import OpenSeadragon from 'openseadragon'
+import { getPlaylist } from '../lib/playlist'
 import { mountChrome } from './chrome'
 import { focusIntroRegion, mountIntro } from './intro'
 import { mountFocusMode } from './focusMode'
@@ -138,7 +139,11 @@ export function bootInteractiveViewer(opts: BootInteractiveOptions = {}): OpenSe
     showViewer()
     lockMinZoomToHome()
     stackHighResDirectlyOnPreview()
-    if (withIntro) mountIntro(viewer)
+    if (withIntro) {
+      mountIntro(viewer)
+    } else {
+      getPlaylist().startAmbientLoop()
+    }
     window.dispatchEvent(new Event('resize'))
   })
 

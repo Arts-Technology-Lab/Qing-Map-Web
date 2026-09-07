@@ -2,11 +2,15 @@
 .DS_Store
 **/.DS_Store
 
+# Raw scan archive — NEVER commit (too large for GitHub; keep local / OneDrive only)
+20260730_object_painting/
+20260730_object_painting.zip
+
 # Dependency / build artifacts if run from repo root
 qing-map-web/node_modules/
 qing-map-web/dist/
 
-# Super-res source only (do not commit ~234MB)
+# Super-res source only (too large; local working copy OK)
 qing-map-web/assets/source/*
 !qing-map-web/assets/source/.gitkeep
 

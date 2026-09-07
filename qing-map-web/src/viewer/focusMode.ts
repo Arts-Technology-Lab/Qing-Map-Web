@@ -13,8 +13,12 @@ type TiledImage = OpenSeadragon.TiledImage
 
 const FOCUS_CLOUD_COUNT = 24
 const VIEWPORT_AVOID_ZOOM = 2
-const CURSOR_AVOID_FRAC = 0.08
-const CURSOR_NUDGE = 0.35
+/** Cursor evade radius as fraction of map min-dimension. */
+const CURSOR_AVOID_FRAC = 0.16
+/** Peak vertical flee speed relative to cruise speed (at cursor center). */
+const CURSOR_NUDGE = 1.15
+/** How quickly vy eases toward the evade target (1/s). */
+const CURSOR_VY_LERP = 6
 /** Native puff art aspect (width / height) — keeps OSD box from letterboxing. */
 const CLOUD_ASPECT = 1354 / 665
 
@@ -31,6 +35,10 @@ type Cloud = {
   dir: CloudDriftDir
   headSide: CloudHeadSide
   src: string
+  /** Smoothed vertical velocity (image px / s) for curved evade paths. */
+  vy: number
+  /** Sticky evade sign: -1 up, +1 down, 0 unset. */
+  evadeSign: -1 | 0 | 1
 }
 
 export type FocusCloudsHandle = {
@@ -158,18 +166,33 @@ export function startFocusClouds(
         if (inside) spd *= 2.2
       }
 
-      const vx = cloud.dir * spd
-      let vy = 0
+      let vx = cloud.dir * spd
+      let vyTarget = 0
+
       if (cursorImg && !deepZoom) {
-        const dCursor = Math.hypot(cloud.x - cursorImg.x, cloud.y - cursorImg.y)
+        const dx = cloud.x - cursorImg.x
+        const dy = cloud.y - cursorImg.y
+        const dCursor = Math.hypot(dx, dy)
         if (dCursor < cursorR && dCursor > 1) {
-          const awayY = cloud.y >= cursorImg.y ? 1 : -1
-          vy = awayY * spd * CURSOR_NUDGE
+          const falloff = 1 - dCursor / cursorR
+          const strength = falloff * falloff
+          if (cloud.evadeSign === 0) {
+            cloud.evadeSign = dy >= 0 ? 1 : -1
+          }
+          vyTarget = cloud.evadeSign * spd * CURSOR_NUDGE * (0.55 + 0.45 * strength)
+          vx *= 1 - 0.35 * strength
+        } else {
+          cloud.evadeSign = 0
         }
+      } else {
+        cloud.evadeSign = 0
       }
 
+      const blend = 1 - Math.exp(-CURSOR_VY_LERP * dt)
+      cloud.vy += (vyTarget - cloud.vy) * blend
+
       cloud.x += vx * dt
-      cloud.y = clamp(cloud.y + vy * dt, size.y * 0.04, size.y * 0.96)
+      cloud.y = clamp(cloud.y + cloud.vy * dt, size.y * 0.04, size.y * 0.96)
       wrapAlongFacing(cloud, size)
       syncOverlay(cloud, item)
     }
@@ -182,7 +205,12 @@ export function startFocusClouds(
     const item = viewer.world.getItemAt(0)
     if (!item) return
     const rect = canvas.getBoundingClientRect()
-    const pixel = new OpenSeadragon.Point(e.clientX - rect.left, e.clientY - rect.top)
+    const sx = rect.width / Math.max(1, canvas.clientWidth)
+    const sy = rect.height / Math.max(1, canvas.clientHeight)
+    const pixel = new OpenSeadragon.Point(
+      (e.clientX - rect.left) / sx,
+      (e.clientY - rect.top) / sy,
+    )
     const vp = viewer.viewport.pointFromPixel(pixel, true)
     const img = item.viewportToImageCoordinates(vp)
     cursorImg = { x: img.x, y: img.y }
@@ -244,6 +272,8 @@ export function startFocusClouds(
       dir,
       headSide: asset.headSide,
       src: asset.src,
+      vy: 0,
+      evadeSign: 0,
     }
 
     const topLeft = item.imageToViewportCoordinates(

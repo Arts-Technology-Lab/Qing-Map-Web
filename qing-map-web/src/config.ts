@@ -27,3 +27,19 @@ export const ATLAB = {
   wallHeight: 808,
   floorHeight: 2400,
 } as const
+
+/**
+ * Soundtrack — files in `public/audio/`.
+ * Flow: Mist (intro, loops) → Chao Tian Zi on seal → Jing Diao once → Mist ↔ Jing loop.
+ */
+export const AUDIO = {
+  mistSheng: '/audio/mist-sheng.mp3',
+  chaoTianZi: '/audio/chao-tian-zi.mp3',
+  jingDiao: '/audio/jing-diao.mp3',
+  volume: 0.5,
+  /** Louder entry hit when the seal is clicked. */
+  chaoTianZiVolume: 0.7,
+  /** Skip silence so the drum lands during Mist Sheng’s fade-out. */
+  chaoTianZiStartAt: 1,
+  fadeMs: 800,
+} as const

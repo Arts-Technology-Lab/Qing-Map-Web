@@ -1,6 +1,7 @@
 import OpenSeadragon from 'openseadragon'
 import { INTRO_FOCUS } from '../config'
 import { pickCloudSrc, rand } from '../lib/clouds'
+import { getPlaylist } from '../lib/playlist'
 
 type Viewer = OpenSeadragon.Viewer
 
@@ -76,6 +77,7 @@ export function mountIntro(viewer: Viewer): void {
   app.classList.add('intro-active')
   intro.hidden = false
   focusIntroRegion(viewer, true)
+  getPlaylist().startIntro()
 
   let started = false
   const begin = () => {
@@ -83,6 +85,7 @@ export function mountIntro(viewer: Viewer): void {
     started = true
     seal.disabled = true
     intro.classList.add('is-scattering')
+    getPlaylist().enterFromSeal()
 
     window.setTimeout(() => {
       smoothZoomHome(viewer, INTRO_ZOOM_OUT_MS)
