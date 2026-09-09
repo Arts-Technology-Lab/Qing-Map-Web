@@ -1,9 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "installCommand": "npm install --prefix qing-map-web",
-  "buildCommand": "npm run build --prefix qing-map-web",
-  "outputDirectory": "qing-map-web/dist",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/atlab", "destination": "/atlab.html" },
     { "source": "/atlab/", "destination": "/atlab.html" }

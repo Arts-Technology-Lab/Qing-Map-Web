@@ -1,6 +1,11 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-qing-map-web/assets/preview/*.jpg filter=lfs diff=lfs merge=lfs -text
-qing-map-web/assets/tiles/**/*.jpg filter=lfs diff=lfs merge=lfs -text
-qing-map-web/assets/tiles/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
-qing-map-web/assets/tiles/**/*.png filter=lfs diff=lfs merge=lfs -text
+
+# Git LFS — map previews + DZI tiles
+assets/preview/*.jpg filter=lfs diff=lfs merge=lfs -text
+assets/tiles/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+assets/tiles/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+assets/tiles/**/*.png filter=lfs diff=lfs merge=lfs -text
+assets/source/*.jpg filter=lfs diff=lfs merge=lfs -text
+assets/source/*.tif filter=lfs diff=lfs merge=lfs -text
+assets/source/*.tiff filter=lfs diff=lfs merge=lfs -text

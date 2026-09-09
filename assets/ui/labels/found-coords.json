@@ -1,0 +1,42 @@
+{
+  "jingshi": {
+    "x": 0.64259,
+    "y": 0.20402,
+    "labelWidth": 0.009,
+    "confidence": "high",
+    "inspection": [
+      "assets/ui/labels/found-jingshi-label.png",
+      "assets/ui/labels/found-jingshi-context.png"
+    ]
+  },
+  "jiangnan": {
+    "x": 0.67564,
+    "y": 0.45542,
+    "labelWidth": 0.00694,
+    "confidence": "high",
+    "inspection": [
+      "assets/ui/labels/found-jiangnan-label.png",
+      "assets/ui/labels/found-jiangnan-context.png"
+    ]
+  },
+  "hunan": {
+    "x": 0.55087,
+    "y": 0.56782,
+    "labelWidth": 0.00727,
+    "confidence": "high",
+    "inspection": [
+      "assets/ui/labels/found-hunan-label.png",
+      "assets/ui/labels/found-hunan-context.png"
+    ]
+  },
+  "guangdong": {
+    "x": 0.56403,
+    "y": 0.7375,
+    "labelWidth": 0.00835,
+    "confidence": "high",
+    "inspection": [
+      "assets/ui/labels/found-guangdong-label.png",
+      "assets/ui/labels/found-guangdong-context.png"
+    ]
+  }
+}

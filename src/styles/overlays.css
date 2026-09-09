@@ -1,0 +1,173 @@
+/* —— Vector map overlays (ink-trace rims) —— */
+
+.map-overlay-layer {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  pointer-events: none !important;
+  overflow: visible;
+}
+
+.map-overlay-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.map-overlay-feature {
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.map-overlay-feature.is-active {
+  opacity: 1;
+}
+
+.overlay-stroke {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/*
+ * Ink borders (GPU-light):
+ * solid soft bleed + patterned body + bright core.
+ * Glow = one CSS drop-shadow on the group (no SVG feTurbulence).
+ */
+
+/* Crimson — 漢地十八省 */
+.style-crimson-glow.is-active {
+  filter: drop-shadow(0 0 3px rgba(255, 60, 70, 0.95))
+    drop-shadow(0 0 9px rgba(220, 30, 45, 0.65));
+}
+
+.style-crimson-glow .overlay-stroke-bleed {
+  stroke: #c01828;
+  stroke-width: 14px;
+  opacity: 0.35;
+}
+
+.style-crimson-glow .overlay-stroke-body {
+  stroke: url(#ink-stroke-crimson);
+  stroke-width: 9px;
+  opacity: 0.92;
+}
+
+.style-crimson-glow .overlay-stroke-core {
+  stroke: #ff3a45;
+  stroke-width: 3.2px;
+  opacity: 1;
+}
+
+/* Gold — 中國 */
+.style-yellow-glow.is-active {
+  filter: drop-shadow(0 0 3px rgba(255, 220, 70, 0.95))
+    drop-shadow(0 0 9px rgba(230, 190, 40, 0.65));
+}
+
+.style-yellow-glow .overlay-stroke-bleed {
+  stroke: #c9a020;
+  stroke-width: 13px;
+  opacity: 0.32;
+}
+
+.style-yellow-glow .overlay-stroke-body {
+  stroke: url(#ink-stroke-gold);
+  stroke-width: 8.5px;
+  opacity: 0.92;
+}
+
+.style-yellow-glow .overlay-stroke-core {
+  stroke: #f0d040;
+  stroke-width: 3px;
+  opacity: 1;
+}
+
+/* —— Overlay 令牌 (bottom-left horizontal row) —— */
+
+.overlay-seals {
+  /* Width-driven 令牌 sizing so different tablet lengths share the same scale */
+  --lingpai-w: min(61px, 10cqmin, 12.2vw);
+  position: absolute;
+  left: 1rem;
+  bottom: 1.15rem;
+  z-index: 7;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* top-align tablets of different lengths */
+  gap: 0.2rem;
+}
+
+.overlay-seal {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  z-index: auto;
+  width: var(--lingpai-w);
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    opacity 0.35s ease;
+  filter: drop-shadow(0 4px 10px rgba(40, 20, 0, 0.35));
+}
+
+.overlay-seal[hidden] {
+  display: none !important;
+}
+
+.overlay-seal img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.overlay-seal:hover {
+  transform: scale(1.06) translateY(-2px);
+  filter: drop-shadow(0 6px 14px rgba(40, 20, 0, 0.45)) brightness(1.05);
+}
+
+.overlay-seal:active {
+  transform: scale(0.97);
+}
+
+.overlay-seal:focus-visible {
+  outline: 2px solid var(--chrome-focus, #d4b56a);
+  outline-offset: 3px;
+}
+
+/* Crimson ribbon — 漢地十八省 */
+#overlay-seal-handi.is-pressed,
+#overlay-seal-handi[aria-pressed='true'] {
+  filter: drop-shadow(0 0 12px rgba(220, 40, 50, 0.8))
+    drop-shadow(0 4px 10px rgba(60, 0, 0, 0.35)) brightness(1.06);
+}
+
+/* Yellow ribbon — 中國 */
+#overlay-seal-zhongguo.is-pressed,
+#overlay-seal-zhongguo[aria-pressed='true'] {
+  filter: drop-shadow(0 0 12px rgba(230, 190, 40, 0.85))
+    drop-shadow(0 4px 10px rgba(80, 50, 0, 0.35)) brightness(1.06);
+}
+
+#app.intro-active .overlay-seals {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+#app.focus-mode .overlay-seals {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.4s ease;
+}

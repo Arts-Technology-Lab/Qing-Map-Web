@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "mapId": "qing-map",
+  "annotations": [
+    {
+      "id": "shaanxi",
+      "title": "陝西",
+      "body": "陝西布政使司。關中形勝，東接晉豫，西連甘隴。圖上標於長安、西安、咸寧一帶。",
+      "aka": [
+        "長安",
+        "西安",
+        "咸寧"
+      ],
+      "point": {
+        "x": 0.4795,
+        "y": 0.37258
+      },
+      "tags": [
+        "province",
+        "guanzhong"
+      ],
+      "labelImage": "/ui/labels/label-shaanxi.png",
+      "labelWidth": 0.00814
+    },
+    {
+      "id": "jingshi",
+      "title": "京師",
+      "body": "（內容待補）京師一帶。圖上標於順天、大興、宛平附近。",
+      "aka": [
+        "順天",
+        "大興",
+        "宛平"
+      ],
+      "point": {
+        "x": 0.64253,
+        "y": 0.20426
+      },
+      "tags": [
+        "capital",
+        "beijing"
+      ],
+      "labelImage": "/ui/labels/label-jingshi.png",
+      "labelWidth": 0.0062
+    },
+    {
+      "id": "jiangnan",
+      "title": "江南",
+      "body": "（內容待補）江南一帶。圖上標於江寧附近。",
+      "aka": [
+        "江寧",
+        "上元"
+      ],
+      "point": {
+        "x": 0.67564,
+        "y": 0.45542
+      },
+      "tags": [
+        "province",
+        "nanjing"
+      ],
+      "labelImage": "/ui/labels/label-jiangnan.png",
+      "labelWidth": 0.00694
+    },
+    {
+      "id": "hunan",
+      "title": "湖南",
+      "body": "（內容待補）湖南布政使司。圖上標於長沙、善化一帶。",
+      "aka": [
+        "長沙",
+        "善化"
+      ],
+      "point": {
+        "x": 0.55087,
+        "y": 0.56782
+      },
+      "tags": [
+        "province",
+        "changsha"
+      ],
+      "labelImage": "/ui/labels/label-hunan.png",
+      "labelWidth": 0.00727
+    },
+    {
+      "id": "guangdong",
+      "title": "廣東",
+      "body": "（內容待補）廣東布政使司。圖上標於廣州、番禺一帶。",
+      "aka": [
+        "廣州",
+        "番禺"
+      ],
+      "point": {
+        "x": 0.56454,
+        "y": 0.73659
+      },
+      "tags": [
+        "province",
+        "canton"
+      ],
+      "labelImage": "/ui/labels/label-guangdong.png?v=canton3",
+      "labelWidth": 0.0082
+    },
+    {
+      "id": "tishi-jiaqing",
+      "title": "題識",
+      "body": "本朝幅員之廣亘古未有東西南朔莫不紀極而萬國之梯航重譯職貢稱臣者更僕不勝屈乾隆\n丁亥年間餘姚黃千人曾為天下輿圖其中山川疆界都邑封圻靡不星羅棋布如指諸掌洵足壯觀\n盛世之版章為遠近之觀度矣然其時金川西藏新疆州郡未經開闢而河道海口等尚不無挂漏之說\n兹刻遵御纂諸書悉為增補較舊圖似加詳晰全圖內每方百里凡省■府□廳▮直隸州⌂州■縣●關□營鎮◎土司▲其塞徼縣亘無際海峙風設不時雜以里數計\n者其方向俱仍舊式未敢稍易已見舊圖勒石不便攜帶屏幅途寓中玩鑒已加整正愧雅君子\n使歸全圖之題覽幸焉\n嘉慶十七年歲在壬申桂月上浣吉旦\n（以上為粗略OCR，待校）",
+      "point": {
+        "x": 0.942,
+        "y": 0.4215
+      },
+      "hitWidth": 0.048,
+      "hitHeight": 0.187,
+      "tags": [
+        "colophon",
+        "legend",
+        "jiaqing"
+      ]
+    }
+  ]
+}

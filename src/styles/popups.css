@@ -1,0 +1,332 @@
+/* —— Location label hotspots (誌) + annotation popup —— */
+
+.map-label-overlay {
+  pointer-events: auto !important;
+  z-index: 5;
+}
+
+.map-label-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: auto;
+  transform: scale(1);
+  transition:
+    opacity 0.45s ease,
+    transform 0.18s ease,
+    filter 0.35s ease;
+  /* Soft glow that follows the feathered alpha — avoid hard box halo */
+  filter: drop-shadow(0 0 6px rgba(160, 210, 255, 0.35))
+    drop-shadow(0 0 14px rgba(110, 175, 255, 0.4));
+  animation: map-label-glow 2.8s ease-in-out infinite;
+}
+
+#app.labels-ready .map-label-btn:not(.is-hidden):not(.is-intro-hidden) {
+  opacity: 1;
+}
+
+.map-label-btn.is-hidden,
+.map-label-btn.is-intro-hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  cursor: default;
+}
+
+.map-label-btn-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Let map texture read through at edges so cutoffs feel less cut-out */
+  opacity: 0.92;
+}
+
+.map-label-btn--text {
+  display: grid;
+  place-items: center;
+  background-image: var(--minimap-paper);
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #3a4a68;
+  box-shadow:
+    0 0 0 1px rgba(200, 210, 220, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  color: #1e2b46;
+  font-family: 'Songti SC', 'STSong', 'Noto Serif TC', 'KaiTi', serif;
+  font-size: clamp(0.7rem, 1.4vw, 1.05rem);
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+/* Invisible selectable region over a map text block */
+.map-label-btn--area {
+  background: transparent;
+  border: 1px solid rgba(180, 220, 255, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(120, 180, 255, 0.12);
+  filter: none;
+  animation: map-area-glow 3.2s ease-in-out infinite;
+}
+
+.map-label-btn--area:hover {
+  border-color: rgba(210, 235, 255, 0.55);
+  background: rgba(140, 190, 255, 0.08);
+  filter: none;
+  transform: none;
+}
+
+.map-label-btn--area:active {
+  transform: none;
+  background: rgba(140, 190, 255, 0.14);
+}
+
+@keyframes map-area-glow {
+  0%,
+  100% {
+    border-color: rgba(160, 210, 255, 0.22);
+    box-shadow: inset 0 0 0 1px rgba(120, 180, 255, 0.1);
+  }
+  50% {
+    border-color: rgba(200, 230, 255, 0.42);
+    box-shadow:
+      inset 0 0 0 1px rgba(150, 200, 255, 0.18),
+      0 0 10px rgba(120, 185, 255, 0.18);
+  }
+}
+
+.map-label-btn:hover {
+  animation: none;
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 7px rgba(190, 225, 255, 0.55))
+    drop-shadow(0 0 16px rgba(120, 185, 255, 0.5))
+    brightness(1.04);
+}
+
+.map-label-btn:active {
+  transform: scale(0.98);
+}
+
+.map-label-btn:focus-visible {
+  outline: 2px solid var(--chrome-focus);
+  outline-offset: 3px;
+}
+
+@keyframes map-label-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px rgba(160, 210, 255, 0.32))
+      drop-shadow(0 0 12px rgba(110, 175, 255, 0.36));
+  }
+  50% {
+    filter: drop-shadow(0 0 7px rgba(190, 230, 255, 0.48))
+      drop-shadow(0 0 16px rgba(130, 190, 255, 0.45));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-label-btn {
+    animation: none;
+  }
+
+  .map-label-btn--area {
+    animation: none;
+  }
+}
+
+/* Annotation popup — same paper frame + scroll fold language as minimap */
+.annotation-popup {
+  --popup-w: min(320px, 78vw);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 8;
+  width: var(--popup-w);
+  max-height: min(42vh, 360px);
+  padding: 16px 16px 14px;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  opacity: 1;
+  pointer-events: auto;
+  background-image: var(--minimap-paper);
+  background-size: cover;
+  background-position: center;
+  border: 3px solid var(--minimap-border);
+  box-shadow:
+    0 0 0 2px var(--minimap-rim),
+    0 12px 32px var(--badge-shadow),
+    inset 0 0 0 1px var(--minimap-inset);
+  border-radius: 4px;
+  will-change: transform, opacity, filter;
+}
+
+.annotation-popup--long {
+  --popup-w: min(420px, 86vw);
+  max-height: min(62vh, 520px);
+}
+
+.annotation-popup--long .annotation-popup-paper {
+  max-height: min(52vh, 460px);
+}
+
+.annotation-popup.is-animating {
+  pointer-events: none;
+}
+
+.annotation-popup.is-folded {
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scaleX(0.06) scaleY(0.88);
+  opacity: 0;
+}
+
+.annotation-popup.is-unfolding {
+  visibility: visible;
+  animation: popup-scroll-unfold 0.58s cubic-bezier(0.22, 0.9, 0.28, 1) both;
+}
+
+.annotation-popup.is-folding {
+  visibility: visible;
+  animation: popup-scroll-fold 0.42s cubic-bezier(0.55, 0.05, 0.7, 0.2) both;
+}
+
+.annotation-popup.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes popup-scroll-unfold {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scaleX(0.06) scaleY(0.88);
+    filter: brightness(0.92) saturate(0.9);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(0.55) scaleY(0.98);
+    filter: brightness(1.02);
+  }
+  78% {
+    transform: translate(-50%, -50%) scaleX(1.04) scaleY(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1) scaleY(1);
+    filter: none;
+  }
+}
+
+@keyframes popup-scroll-fold {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scaleX(0.06) scaleY(0.88);
+    filter: brightness(0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .annotation-popup.is-unfolding,
+  .annotation-popup.is-folding {
+    animation-duration: 0.01ms;
+  }
+}
+
+.annotation-popup[hidden] {
+  display: none !important;
+}
+
+.annotation-popup-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  background-image: var(--badge-shou);
+}
+
+.annotation-popup-paper {
+  position: relative;
+  z-index: 2;
+  max-height: min(34vh, 300px);
+  overflow: auto;
+  padding: 0.85rem 0.95rem 1rem;
+  border: 1px solid var(--minimap-well-border);
+  box-shadow: inset 0 0 12px var(--minimap-well-shadow);
+  background: var(--minimap-well-fill);
+  color: #1a2233;
+  font-family: 'Kaiti TC', 'Kaiti SC', KaiTi, 'STKaiti', 'BiauKai', 'DFKai-SB', 'Noto Serif TC', serif;
+}
+
+.annotation-popup-title {
+  margin: 0 0 0.55rem;
+  font-family: inherit;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-align: start;
+  color: #1e2b46;
+}
+
+.annotation-popup-table {
+  width: 100%;
+  margin: 0 0 0.7rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #2a3348;
+}
+
+.annotation-popup-table th,
+.annotation-popup-table td {
+  padding: 0.35rem 0.2rem;
+  vertical-align: top;
+  font-family: inherit;
+  text-align: start;
+  border-bottom: 1px solid rgba(60, 68, 78, 0.18);
+}
+
+.annotation-popup-table th {
+  width: 3.2em;
+  padding-right: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  color: #1e2b46;
+}
+
+.annotation-popup-table td {
+  letter-spacing: 0.06em;
+}
+
+.annotation-popup-body {
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  color: #2a3348;
+  text-align: justify;
+  text-align-last: left;
+  white-space: pre-wrap;
+}
+
+#app.intro-active .annotation-popup,
+#app.focus-mode .annotation-popup,
+#app.focus-mode .map-label-btn {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden;
+}

@@ -1,20 +1,38 @@
-# Qing Map Web — local / OS noise (project-specific ignores live in qing-map-web/.gitignore)
-.DS_Store
-**/.DS_Store
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Raw scan archive — NEVER commit (too large for GitHub; keep local / OneDrive only)
+node_modules
+dist
+dist-ssr
+*.local
+
+# Raw scan archive — NEVER commit
 20260730_object_painting/
 20260730_object_painting.zip
 
-# Dependency / build artifacts if run from repo root
-qing-map-web/node_modules/
-qing-map-web/dist/
+# Super-res working copy only (too large for git / Vercel)
+assets/source/*
+!assets/source/.gitkeep
 
-# Super-res source only (too large; local working copy OK)
-qing-map-web/assets/source/*
-!qing-map-web/assets/source/.gitkeep
+# Generated public copies (created by npm run prepare-public)
+public/tiles/
+public/map-preview.jpg
+public/map-preview-low.jpg
 
-# Generated public map copies (from prepare-public)
-qing-map-web/public/tiles/
-qing-map-web/public/map-preview.jpg
-qing-map-web/public/map-preview-low.jpg
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.cursor/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
