@@ -52,7 +52,7 @@ npm run dev
 
 The Vite app is at the **repository root** (no nested folder).
 
-1. Import `Arts-Technology-Lab/Qing-Map-Web`.
+1. Import `CWY1013HK/Qing-Map-Web`.
 2. Root Directory: `./` (repo root).
 3. Framework: **Vite** (auto-detect).
 4. Leave build overrides off (`vercel.json`: `npm run build` → `dist`).

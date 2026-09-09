@@ -48,6 +48,8 @@ function buildHotspotButton(annotation: Annotation): HTMLButtonElement {
 
   if (isAreaHotspot(annotation)) {
     btn.classList.add('map-label-btn--area')
+    // Empty buttons can collapse; keep a hit target for OSD sizing.
+    btn.innerHTML = '<span class="map-label-btn-area-fill" aria-hidden="true"></span>'
   } else if (annotation.labelImage) {
     const img = document.createElement('img')
     img.src = annotation.labelImage

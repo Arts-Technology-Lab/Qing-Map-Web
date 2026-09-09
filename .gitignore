@@ -36,3 +36,5 @@ public/map-preview-low.jpg
 *.njsproj
 *.sln
 *.sw?
+.vercel
+.env*
