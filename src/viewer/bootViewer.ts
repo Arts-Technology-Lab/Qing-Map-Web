@@ -2,6 +2,7 @@ import OpenSeadragon from 'openseadragon'
 import { getPlaylist } from '../lib/playlist'
 import { mountOverlaysOnViewer } from '../overlays/manager'
 import { mountOverlaySealControls } from '../overlays/sealControl'
+import { mountCreditsToggle } from '../popups/credits'
 import { mountLabelToggle, mountLocationLabels } from '../popups/labels'
 import { mountChrome } from './chrome'
 import { focusIntroRegion, mountIntro } from './intro'
@@ -109,6 +110,7 @@ export function bootInteractiveViewer(opts: BootInteractiveOptions = {}): OpenSe
   mountOverlaySealControls()
   mountLocationLabels(viewer)
   mountLabelToggle()
+  mountCreditsToggle()
 
   function lockMinZoomToHome(): void {
     const homeZoom = viewer.viewport.getHomeZoom()

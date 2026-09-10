@@ -29,6 +29,7 @@ body {
   --badge-shou: url('/ui/silver/badge-shou.png');
   --badge-jing: url('/ui/silver/badge-jing.png');
   --badge-zhi: url('/ui/silver/badge-zhi.png');
+  --badge-gong: url('/ui/silver/badge-gong.png');
   --minimap-paper: url('/ui/silver/paper.png');
   /* Silver metal 令牌 + coloured ribbons */
   --lingpai-handi: url('/ui/silver/handi-lingpai.png');
@@ -54,6 +55,7 @@ body {
   --badge-shou: url('/ui/bronze/badge-shou.png');
   --badge-jing: url('/ui/bronze/badge-jing.png');
   --badge-zhi: url('/ui/bronze/badge-zhi.png');
+  --badge-gong: url('/ui/bronze/badge-gong.png');
   --minimap-paper: url('/ui/bronze/paper.png');
   /* Ebony wood 令牌 + coloured ribbons (original tablets) */
   --lingpai-handi: url('/ui/bronze/handi-lingpai.png');
@@ -217,6 +219,12 @@ body {
   opacity: 0.8;
 }
 #btn-toggle-labels[aria-pressed='true'] {
+  filter: drop-shadow(0 2px 4px var(--badge-shadow)) brightness(1.08);
+}
+#btn-credits {
+  background-image: var(--badge-gong);
+}
+#btn-credits[aria-pressed='true'] {
   filter: drop-shadow(0 2px 4px var(--badge-shadow)) brightness(1.08);
 }
 

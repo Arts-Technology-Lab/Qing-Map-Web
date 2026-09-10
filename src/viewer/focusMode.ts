@@ -7,6 +7,7 @@ import {
   type CloudDriftDir,
   type CloudHeadSide,
 } from '../lib/clouds'
+import { closeCreditsPopup } from '../popups/credits'
 import { closeAnnotationPopup } from '../popups/panel'
 
 type Viewer = OpenSeadragon.Viewer
@@ -353,6 +354,7 @@ export function mountFocusMode(viewer: Viewer): void {
   const enter = () => {
     if (handle) return
     closeAnnotationPopup()
+    void closeCreditsPopup()
     app.classList.add('focus-mode')
     btn.setAttribute('aria-pressed', 'true')
     handle = startFocusClouds(viewer, { canvas })

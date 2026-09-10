@@ -332,6 +332,54 @@
   white-space: pre-wrap;
 }
 
+.credits-popup-music {
+  white-space: normal;
+  text-align: start;
+  text-align-last: start;
+}
+
+.credits-popup-music-heading {
+  margin: 0 0 0.45rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #1e2b46;
+}
+
+.credits-popup-music-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.credits-popup-music-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 0.85rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(60, 68, 78, 0.18);
+}
+
+.credits-popup-music-list li:last-child {
+  border-bottom: 0;
+}
+
+.credits-track {
+  letter-spacing: 0.06em;
+}
+
+.credits-popup-music-list a {
+  color: #1e2b46;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.credits-popup-music-list a:hover {
+  color: #3a4a66;
+}
+
 #app.intro-active .annotation-popup,
 #app.focus-mode .annotation-popup,
 #app.focus-mode .map-label-btn {
