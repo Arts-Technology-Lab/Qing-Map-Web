@@ -103,13 +103,15 @@
       "id": "dihua",
       "title": "迪化",
       "body": "迪化，即今烏魯木齊，為清代新疆重鎮。乾隆朝兩度用兵準噶爾，平定天山南北，展拓西北疆域，並在此設治屯戍。乾隆帝屢言「中外一家」，以天下一家之說統攝內地與藩部，將新疆納入大一統版圖。",
-      "aka": [
-        "烏魯木齊"
-      ],
       "point": {
         "x": 0.194,
         "y": 0.18534
       },
+      "tags": [
+        "xinjiang",
+        "qianlong",
+        "frontier"
+      ],
       "labelImage": "/ui/labels/label-dihua.png?v=house8",
       "labelWidth": 0.0038
     },
