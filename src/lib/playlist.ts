@@ -26,6 +26,7 @@ class MapPlaylist {
   private fadeGen = 0
   private unlockBound = false
   private started = false
+  private muted = false
   private readonly unlockHandler = (e: PointerEvent) => this.onUnlockPointer(e)
   private readonly onAudioEnded = () => this.onEnded()
 
@@ -33,8 +34,24 @@ class MapPlaylist {
     this.bindAudio(this.audio)
   }
 
+  isMuted(): boolean {
+    return this.muted
+  }
+
+  /** Silence or restore soundtrack without stopping the playlist timeline. */
+  setMuted(muted: boolean): void {
+    this.muted = muted
+    this.audio.muted = muted
+  }
+
+  toggleMuted(): boolean {
+    this.setMuted(!this.muted)
+    return this.muted
+  }
+
   private bindAudio(el: HTMLAudioElement): void {
     el.preload = 'auto'
+    el.muted = this.muted
     el.addEventListener('ended', this.onAudioEnded)
   }
 
@@ -111,6 +128,7 @@ class MapPlaylist {
     const gen = ++this.fadeGen
     const next = new Audio()
     next.preload = 'auto'
+    next.muted = this.muted
     next.loop = opts.loop
     next.src = src
     next.volume = 0

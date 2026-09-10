@@ -7,6 +7,7 @@ import { mountLabelToggle, mountLocationLabels } from '../popups/labels'
 import { mountChrome } from './chrome'
 import { focusIntroRegion, mountIntro } from './intro'
 import { mountFocusMode } from './focusMode'
+import { mountMusicToggle } from './musicToggle'
 
 const PREVIEW_URL = '/map-preview.jpg'
 const TILE_SOURCE = '/tiles/map.dzi'
@@ -110,6 +111,7 @@ export function bootInteractiveViewer(opts: BootInteractiveOptions = {}): OpenSe
   mountOverlaySealControls()
   mountLocationLabels(viewer)
   mountLabelToggle()
+  mountMusicToggle()
   mountCreditsToggle()
 
   function lockMinZoomToHome(): void {
